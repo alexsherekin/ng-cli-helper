@@ -19,10 +19,11 @@ const logger = Logger.getInstance("Extension Main");
  */
 
 export function activate(context: vscode.ExtensionContext) {
+	const angularProjectReader = new AngularProjectReader();
 
 	// create component command
 	context.subscriptions.push(vscode.commands.registerCommand('ngHelper.createComponent', async (clickedFolder: vscode.Uri) => {
-		const angularJsonFile = await AngularProjectReader.getAngularJSONFile();
+		const angularJsonFile = await angularProjectReader.getAngularJSONFile();
 		if (!angularJsonFile) {
 			return;
 		}
@@ -32,18 +33,18 @@ export function activate(context: vscode.ExtensionContext) {
 			return;
 		}
 		// get path to create the component
-		const commandData = await AngularProjectReader.getCLIPathBasedOnUserClick(angularJsonFile, clickedFolder.fsPath);
+		const commandData = await angularProjectReader.getCLIPathBasedOnUserClick(angularJsonFile, clickedFolder.fsPath);
 		// create complete path with component name
 		const commandPath = (commandData.path.length !== 0 ? commandData.path + path.sep : '') + componentName;
 		// generate the component
-		AngularProjectReader.generateAngularComponent('Component', commandPath, commandData.project);
+		angularProjectReader.generateAngularComponent('Component', commandPath, commandData.project);
 		const message = vscode.window.setStatusBarMessage('Component Generated!!!');
-		disposeMesageAfterTimeOut(message, 5000);
+		disposeMessageAfterTimeOut(message, 5000);
 	}));
 
 	// create module command
 	context.subscriptions.push(vscode.commands.registerCommand('ngHelper.createModule', async (clickedFolder: vscode.Uri) => {
-		const angularJsonFile = await AngularProjectReader.getAngularJSONFile();
+		const angularJsonFile = await angularProjectReader.getAngularJSONFile();
 		if (!angularJsonFile) {
 			return;
 		}
@@ -58,18 +59,18 @@ export function activate(context: vscode.ExtensionContext) {
 			isRoutingModuleRequired = 'No';
 		}
 		// get path to create the component
-		const commandData = await AngularProjectReader.getCLIPathBasedOnUserClick(angularJsonFile, clickedFolder.fsPath);
+		const commandData = await angularProjectReader.getCLIPathBasedOnUserClick(angularJsonFile, clickedFolder.fsPath);
 		// create complete path with component name
 		const commandPath = (commandData.path.length !== 0 ? commandData.path + path.sep : '') + moduleName;
 		// generate the module
-		AngularProjectReader.generateAngularComponent('Module', commandPath, commandData.project, isRoutingModuleRequired === 'Yes');
+		angularProjectReader.generateAngularComponent('Module', commandPath, commandData.project, isRoutingModuleRequired === 'Yes');
 		const message = vscode.window.setStatusBarMessage('Module Generated!!!');
-		disposeMesageAfterTimeOut(message, 5000);
+		disposeMessageAfterTimeOut(message, 5000);
 	}));
 
 	// create service command
 	context.subscriptions.push(vscode.commands.registerCommand('ngHelper.createService', async (clickedFolder: vscode.Uri) => {
-		const angularJsonFile = await AngularProjectReader.getAngularJSONFile();
+		const angularJsonFile = await angularProjectReader.getAngularJSONFile();
 		if (!angularJsonFile) {
 			return;
 		}
@@ -79,18 +80,18 @@ export function activate(context: vscode.ExtensionContext) {
 			return;
 		}
 		// get path to create the component
-		const commandData = await AngularProjectReader.getCLIPathBasedOnUserClick(angularJsonFile, clickedFolder.fsPath);
+		const commandData = await angularProjectReader.getCLIPathBasedOnUserClick(angularJsonFile, clickedFolder.fsPath);
 		// create complete path with component name
 		const commandPath = (commandData.path.length !== 0 ? commandData.path + path.sep : '') + serviceName;
 		// generate the component
-		AngularProjectReader.generateAngularComponent('Service', commandPath, commandData.project);
+		angularProjectReader.generateAngularComponent('Service', commandPath, commandData.project);
 		const message = vscode.window.setStatusBarMessage('Service Generated!!!');
-		disposeMesageAfterTimeOut(message, 5000);
+		disposeMessageAfterTimeOut(message, 5000);
 	}));
 
 	// create directive command
 	context.subscriptions.push(vscode.commands.registerCommand('ngHelper.createDirective', async (clickedFolder: vscode.Uri) => {
-		const angularJsonFile = await AngularProjectReader.getAngularJSONFile();
+		const angularJsonFile = await angularProjectReader.getAngularJSONFile();
 		if (!angularJsonFile) {
 			return;
 		}
@@ -100,18 +101,18 @@ export function activate(context: vscode.ExtensionContext) {
 			return;
 		}
 		// get path to create the component
-		const commandData = await AngularProjectReader.getCLIPathBasedOnUserClick(angularJsonFile, clickedFolder.fsPath);
+		const commandData = await angularProjectReader.getCLIPathBasedOnUserClick(angularJsonFile, clickedFolder.fsPath);
 		// create complete path with component name
 		const commandPath = (commandData.path.length !== 0 ? commandData.path + path.sep : '') + directiveName;
 		// generate the component
-		AngularProjectReader.generateAngularComponent('Directive', commandPath, commandData.project);
+		angularProjectReader.generateAngularComponent('Directive', commandPath, commandData.project);
 		const message = vscode.window.setStatusBarMessage('Directive Generated!!!');
-		disposeMesageAfterTimeOut(message, 5000);
+		disposeMessageAfterTimeOut(message, 5000);
 	}));
 
 	// create pipe command
 	context.subscriptions.push(vscode.commands.registerCommand('ngHelper.createPipe', async (clickedFolder: vscode.Uri) => {
-		const angularJsonFile = await AngularProjectReader.getAngularJSONFile();
+		const angularJsonFile = await angularProjectReader.getAngularJSONFile();
 		if (!angularJsonFile) {
 			return;
 		}
@@ -121,34 +122,34 @@ export function activate(context: vscode.ExtensionContext) {
 			return;
 		}
 		// get path to create the component
-		const commandData = await AngularProjectReader.getCLIPathBasedOnUserClick(angularJsonFile, clickedFolder.fsPath);
+		const commandData = await angularProjectReader.getCLIPathBasedOnUserClick(angularJsonFile, clickedFolder.fsPath);
 		// create complete path with component name
 		const commandPath = (commandData.path.length !== 0 ? commandData.path + path.sep : '') + pipeName;
 		// generate the component
-		AngularProjectReader.generateAngularComponent('Pipe', commandPath, commandData.project);
+		angularProjectReader.generateAngularComponent('Pipe', commandPath, commandData.project);
 		const message = vscode.window.setStatusBarMessage('Pipe Generated!!!');
-		disposeMesageAfterTimeOut(message, 5000);
+		disposeMessageAfterTimeOut(message, 5000);
 	}));
 
 	// enabling debug mode
 	context.subscriptions.push(vscode.commands.registerCommand('ngHelper.enableDebugMode', () => {
 		Environment.setEnvironment('dev');
 		const message = vscode.window.setStatusBarMessage('Enabled Debug Mode');
-		disposeMesageAfterTimeOut(message, 5000);
+		disposeMessageAfterTimeOut(message, 5000);
 	}));
 
 	// enabling prod mode
 	context.subscriptions.push(vscode.commands.registerCommand('ngHelper.enableProdMode', () => {
 		Environment.setEnvironment('prod');
 		const message = vscode.window.setStatusBarMessage('Enabled Prod Mode');
-		disposeMesageAfterTimeOut(message, 5000);
+		disposeMessageAfterTimeOut(message, 5000);
 	}));
 }
 
 /**
  * @description disposes the given message after given timeout (in ms)
  */
-function disposeMesageAfterTimeOut(message: vscode.Disposable, timeout: number) {
+function disposeMessageAfterTimeOut(message: vscode.Disposable, timeout: number) {
 	setTimeout(() => {
 		message.dispose();
 	}, timeout);
