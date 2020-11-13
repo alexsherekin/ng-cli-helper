@@ -97,6 +97,59 @@
 					"when": "explorerResourceIsFolder"
 				}
 			]
+		},
+		"configuration": {
+			"title": "ng-cli-helper",
+			"properties": {
+				"ng-cli-helper.component.change-detection": {
+					"type": "string",
+					"enum": [
+						"Default",
+						"OnPush"
+					],
+					"enumDescriptions": [
+						"Adds changeDetection: ChangeDetectionStrategy.Default to your Component decorator properties",
+						"Adds changeDetection: ChangeDetectionStrategy.OnPush to your Component decorator properties"
+					]
+				},
+				"ng-cli-helper.component.display-block": {
+					"type": "boolean",
+					"description": "Sets CSS property 'display: block' for the component by default"
+				},
+				"ng-cli-helper.component.inline-template": {
+					"type": "boolean",
+					"description": "Generate component with an inline template instead of a separate file"
+				},
+				"ng-cli-helper.component.inline-style": {
+					"type": "boolean",
+					"description": "Generate component with inline styles instead of a separate file"
+				},
+				"ng-cli-helper.component.prefix": {
+					"type": "string",
+					"description": "Prefix for the component name"
+				},
+				"ng-cli-helper.component.style": {
+					"type": "string",
+					"enum": [
+						"css",
+						"scss",
+						"sass",
+						"less",
+						"styl"
+					],
+					"description": "Define a style file extension"
+				},
+				"ng-cli-helper.component.view-encapsulation": {
+					"type": "string",
+					"enum": [
+						"Emulated",
+						"Native",
+						"None",
+						"ShadowDom"
+					],
+					"description": "Define a viewEncapsulation property of the component"
+				}
+			}
 		}
 	},
 	"scripts": {
